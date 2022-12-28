@@ -1,5 +1,5 @@
 <?php
-require("sql_config.php");
+
 $servername ="localhost";
 $username ="root";
 $password ="12345678";
@@ -11,12 +11,14 @@ $result = mysqli_query($conn,"select COUNT(distinct developers.user_id) from dev
 
 $array= array();
 class User{
-    public $number;
+    public $user_id;
+    public $num;
 }
 //mysql_fetch_array() 函数从结果集中取得一行作为关联数组，返回根据从结果集取得的行生成的数组，如果没有更多行则返回 false
 while($row = mysqli_fetch_array($result)){
     $user = new User();
-    $user-> number = $row[0];
+//    $user->user_id = $row[0];
+    $user-> num = $row[0];
     $array[] = $user;//将数据给到数组
 }
 $data=json_encode($array);//转化为json格式

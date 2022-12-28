@@ -12,29 +12,28 @@
 </div>
 </body>
 <script type="text/javascript">
-
-    var developersNumber=[];
+    var arr1=[],arr2=[];
     function arrTest(){
-        //这个功能块的作用就是读取json数据。-->
+        //这个功能块的作用就是读取json数据。
         $.ajax({
-            type:"post",//请求服务器载入数据-->
-            async:false,//异步属性-->
-            url:"getTotalDeveloper.php",
-            // data:{},
+            type:"post",//请求服务器载入数据
+            async:false,//异步属性
+            url:"getIssue.php",
+            data:{},
             dataType:"json",
             success:function(result){
-            if (result) {
-                for (var i = 0; i < result.length; i++) {
-                    developersNumber.push(result[i].num);
-                    console.log(result[i].num);
+                if (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        arr1.push(result[i].state);
+                        arr2.push(result[i].count);
+                    }
                 }
             }
-        }
-    })
-        return developersNumber;
+        })
+        return arr1,arr2;
     }
 
-
+    arrTest();
     var myChart = echarts.init(document.getElementById('_top'));
 
     // 基于准备好的dom，初始化echarts实例
@@ -171,7 +170,7 @@
             splitArea:{					//--网格区域
                 show:false,					//---是否显示，默认false
             },
-            data: ['developer'],//内容
+            data: ['关闭','开启']//内容
         },
 
         //----------------------  y轴  ------------------------
@@ -253,7 +252,7 @@
                 barWidth:'20',				//---柱形宽度
                 barCategoryGap:'20%',		//---柱形间距
                 // data: arrTest(),
-                data:arrTest()
+                data: arr2
             }
         ]
     };

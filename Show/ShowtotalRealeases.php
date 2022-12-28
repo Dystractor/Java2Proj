@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>echarts</title>
+    <title>totalReleases</title>
 </head>
 <script src="echarts/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="echarts/echarts.min.js"></script>
@@ -13,27 +13,28 @@
 </body>
 <script type="text/javascript">
 
-    var developersNumber=[];
+    var totalReleases=[];
     function arrTest(){
         //这个功能块的作用就是读取json数据。-->
         $.ajax({
             type:"post",//请求服务器载入数据-->
             async:false,//异步属性-->
-            url:"getTotalDeveloper.php",
-            // data:{},
+            url:"getRelease.php",
+            data:{},
             dataType:"json",
             success:function(result){
-            if (result) {
-                for (var i = 0; i < result.length; i++) {
-                    developersNumber.push(result[i].num);
-                    console.log(result[i].num);
+                if (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        totalReleases.push(result[i].totalRelease);
+                        console.log(result[i].totalRelease);
+                    }
                 }
             }
-        }
-    })
-        return developersNumber;
+        })
+        return totalReleases;
     }
 
+    arrTest();
 
     var myChart = echarts.init(document.getElementById('_top'));
 
@@ -119,7 +120,7 @@
             position:'bottom',			//---x轴位置
             offset:0,					//---x轴相对于默认位置的偏移
             type:'category',			//---轴类型，默认'category'
-            name:'developer',				//---轴名称
+            name:'total',				//---轴名称
             nameLocation:'end',			//---轴名称相对位置
             nameTextStyle:{				//---坐标轴名称样式
                 color:"#fff",
@@ -171,7 +172,7 @@
             splitArea:{					//--网格区域
                 show:false,					//---是否显示，默认false
             },
-            data: ['developer'],//内容
+            data: ['数量']//内容
         },
 
         //----------------------  y轴  ------------------------
@@ -253,7 +254,7 @@
                 barWidth:'20',				//---柱形宽度
                 barCategoryGap:'20%',		//---柱形间距
                 // data: arrTest(),
-                data:arrTest()
+                data:arrTest(),
             }
         ]
     };
